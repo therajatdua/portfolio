@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Mode - User's Palette */
+  /* Beige: #D9D2C8 -> 217 210 200 */
+  --retro-bg: 217 210 200;
+  /* Dark Grey: #2A2A2A -> 42 42 42 */
+  --retro-text: 42 42 42;
+  /* Navy: #000080 -> 0 0 128 */
+  --retro-accent: 0 0 128;
+  /* Silver: #C0C0C0 -> 192 192 192 */
+  --retro-secondary: 192 192 192;
+  /* Red: #FF0000 -> 255 0 0 */
+  --retro-cta: 255 0 0;
+}
+
+.dark {
+  /* Dark Mode - Inverted User's Palette */
+  /* Background: Dark Grey (#2A2A2A) */
+  --retro-bg: 42 42 42;
+  /* Text: Beige (#D9D2C8) */
+  --retro-text: 217 210 200;
+  /* Accent: Bright Indigo (#6666ff) - Lighter Navy for accessibility */
+  --retro-accent: 102 102 255;
+  /* Secondary: Navy (#000080) - Used for card backgrounds/tints */
+  --retro-secondary: 0 0 128;
+  /* CTA: Soft Red (#ff4d4d) */
+  --retro-cta: 255 77 77;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background-color: rgb(var(--retro-bg));
+  color: rgb(var(--retro-text));
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Press Start 2P', 'Inter', sans-serif;
+  color: var(--retro-text);
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4 {
+  text-shadow: 2px 2px 0px var(--retro-accent);
+}
+
+.pixel-border {
+  border: 3px solid var(--retro-text);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.12);
+}
+
+.dark .pixel-border {
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pixel-shadow {
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.12);
+}
+
+.dark .pixel-shadow {
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pixel-button {
+  border: 3px solid var(--retro-text);
+  background: transparent;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--retro-text);
+}
+
+.pixel-button:hover {
+  background: var(--retro-accent);
+  color: #fff;
+  transform: scale(1.02);
+  border-color: var(--retro-text);
+}
+
+/* Apple-style Liquid Glass Effect with Retro Twist */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.15); /* Highly transparent */
+  backdrop-filter: blur(16px) saturate(180%); /* The "Apple" blur effect */
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 3px solid var(--retro-text); /* Keeping your retro identity */
+  box-shadow: 
+    6px 6px 0 rgba(0,0,0,0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4); /* Subtle inner glass edge */
+}
+
+.dark .liquid-glass {
+  background: rgba(30, 30, 30, 0.4);
+  box-shadow: 
+    6px 6px 0 rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Specific glass effect for footer to avoid rounded corners */
+.liquid-glass-footer {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes typefade {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
