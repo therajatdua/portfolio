@@ -1,4 +1,5 @@
 import memovaultImg from './img/memovault.png';
+import portfolioImg from './img/portfolio.png';
 
 export const profile = {
   name: "Rajat Dua",
@@ -38,7 +39,7 @@ export const projects = [
     tech: "React, Tailwind CSS, Framer Motion",
     link: "https://github.com/therajatdua/portfolio",
     demo: "https://www.therajatdua.dev",
-    src: null
+    src: portfolioImg
   },
   {
     title: "Coming Soon",
