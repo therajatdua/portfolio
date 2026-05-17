@@ -89,7 +89,7 @@ export default function Home() {
           className="flex flex-wrap justify-center gap-6 mt-8"
         >
           <a 
-            href="/resume.pdf"
+            href="/resume3.pdf"
             className="pixel-button group"
           >
             <svg className="w-5 h-5 mr-2 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
