@@ -1,5 +1,6 @@
 import memovaultImg from './img/memovault.png';
 import portfolioImg from './img/portfolio.png';
+import khabriImg from './img/khabri.png';
 
 export const profile = {
   name: "Rajat Dua",
@@ -41,6 +42,14 @@ export const projects = [
     demo: "https://www.therajatdua.dev",
     src: portfolioImg
   },
+{
+  title: "Khabri – Dynamic NewsPaper",
+  desc: "A dynamic AI-powered news platform that delivers real-time news updates, concise article summaries, and interactive chat-based news exploration with a modern responsive UI.",
+  tech: "Node.js, Express.js, HTML, CSS, JavaScript, SQL, Vercel",
+  link: "https://github.com/therajatdua/Khabri-Dynamic_NewsPaper",
+  demo: "https://khabri-newswala.vercel.app/",
+  src: khabriImg
+},
   {
     title: "Coming Soon",
     desc: "More exciting projects are in the works. Stay tuned for updates!",
