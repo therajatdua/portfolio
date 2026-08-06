@@ -4,17 +4,15 @@ import { profile } from '../data';
 
 export default function Footer() {
   return (
-    <footer className="mt-20 py-8 text-center liquid-glass-footer">
-      <p className="font-press text-xs md:text-sm text-retroText">
-        © {new Date().getFullYear()} {profile.name}.
-      </p>
-   
-      <div className="flex justify-center gap-4 text-xs font-press text-retroText/60">
-        <Link to="/privacy-policy" className="hover:text-retroAccent hover:underline">Privacy</Link>
-        <span>|</span>
-        <Link to="/cookie-policy" className="hover:text-retroAccent hover:underline">Cookies</Link>
-        <span>|</span>
-        <Link to="/terms-of-service" className="hover:text-retroAccent hover:underline">Terms</Link>
+    <footer className="py-12 border-t border-themeBorder bg-themeBg/30 text-themeTextMuted">
+      <div className="site-max px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-semibold">
+        <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+        
+        <div className="flex gap-6">
+          <Link to="/privacy-policy" className="hover:text-brandAccent transition-colors">Privacy Policy</Link>
+          <Link to="/cookie-policy" className="hover:text-brandAccent transition-colors">Cookie Policy</Link>
+          <Link to="/terms-of-service" className="hover:text-brandAccent transition-colors">Terms of Service</Link>
+        </div>
       </div>
     </footer>
   );

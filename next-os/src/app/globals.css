@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-base: var(--bg-base);
+  --color-card-base: var(--card-base);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-base: var(--border-base);
+  --color-accent-base: var(--accent-base);
+  
+  --font-sans: "Geist", "Inter", "General Sans", "Satoshi", sans-serif;
+  
+  --radius-lg: 24px;
+  --radius-md: 20px;
+  --radius-sm: 12px;
+}
+
+:root {
+  /* Light Mode Colors */
+  --bg-base: #FAFAFA;
+  --card-base: #FFFFFF;
+  --text-primary: #111111;
+  --text-secondary: #737373;
+  --border-base: #E5E7EB;
+  --accent-base: #5B5BD6;
+}
+
+.dark {
+  /* Dark Mode Colors */
+  --bg-base: #09090B;
+  --card-base: #18181B;
+  --text-primary: #F4F4F5;
+  --text-secondary: #A1A1AA;
+  --border-base: #27272A;
+  --accent-base: #7070E2;
+}
+
+* {
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-base);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Print Styling for printable resume page */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-card {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+}

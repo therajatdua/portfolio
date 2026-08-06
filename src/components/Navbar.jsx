@@ -1,162 +1,204 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { FaSun, FaMoon } from 'react-icons/fa';
-import { useLocation, useNavigate } from 'react-router-dom';
-import logo from '../img/logosvg.svg';
 
-export default function Navbar({ theme, toggleTheme }) {
+export default function Navbar({ isDarkPage, setIsDark }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [isTouch, setIsTouch] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      
-      if (location.pathname === '/') {
-        // Simple scroll spy
-        const sections = ['home', 'about', 'projects', 'contact'];
-        const current = sections.find(section => {
-          const element = document.getElementById(section);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            return rect.top <= 100 && rect.bottom >= 100;
-          }
-          return false;
-        });
-        if (current) setActiveSection(current);
-      } else {
-        setActiveSection('');
-      }
     };
     window.addEventListener('scroll', handleScroll);
+    
+    // Detect coarser pointers (such as touchscreens) to bypass desktop-only hovers
+    setIsTouch(window.matchMedia('(pointer: coarse)').matches);
+    
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname]);
+  }, []);
 
-  useEffect(() => {
-    if (location.pathname === '/' && location.state?.scrollTo) {
-      const element = document.getElementById(location.state.scrollTo);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-        // Clear state to prevent scroll on refresh/back
-        window.history.replaceState({}, document.title);
-      }
-    }
-  }, [location]);
-
-  const scrollToSection = (id) => {
+  const handleContactClick = (e) => {
+    e.preventDefault();
     setIsOpen(false);
-    if (location.pathname !== '/') {
-      navigate('/', { state: { scrollTo: id } });
-    } else {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname === '/tech') {
+      const contactEl = document.getElementById('contact');
+      if (contactEl) {
+        contactEl.scrollIntoView({ behavior: 'smooth' });
       }
+    } else {
+      navigate('/tech');
+      setTimeout(() => {
+        const contactEl = document.getElementById('contact');
+        if (contactEl) {
+          contactEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 200);
     }
   };
 
-  const NavItem = ({ id, label }) => (
-    <button
-      onClick={() => scrollToSection(id)}
-      className={`text-xs md:text-sm font-press uppercase tracking-wider transition-colors duration-300 ${
-        activeSection === id
-          ? "text-retroAccent underline decoration-2 underline-offset-4"
-          : "text-retroText hover:text-retroAccent"
-      }`}
-    >
-      {label}
-    </button>
-  );
-
-  const MobileNavItem = ({ id, label }) => (
-    <button
-      onClick={() => scrollToSection(id)}
-      className={`block w-full text-left px-4 py-3 text-sm font-press uppercase border-b-2 border-retroText transition-colors duration-300 ${
-        activeSection === id
-          ? "text-retroAccent bg-white dark:bg-retroSecondary/20"
-          : "text-retroText hover:bg-white/50 dark:hover:bg-retroSecondary/10"
-      }`}
-    >
-      {label}
-    </button>
-  );
+  const navLinks = [
+    { label: 'Tech', path: '/tech', isExternal: false },
+    { label: 'Social', path: '/social', isExternal: false },
+    { label: 'Contact', path: '#contact', isExternal: true }
+  ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b ${
         scrolled
-          ? "liquid-glass py-3 border-x-0 border-t-0" // Use liquid glass but remove side/top borders for full-width bar
-          : "bg-transparent border-transparent py-6"
+          ? 'bg-themeBg/85 backdrop-blur-md border-themeBorder py-3.5'
+          : 'bg-transparent border-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        <button onClick={() => scrollToSection('home')} className="hover:opacity-80 transition-opacity flex items-center gap-3">
-          <img src={logo} alt="Rajat Dua" className="h-5 w-auto md:h-6" />
-          <span className="font-press text-sm md:text-base text-retroText">Rajat Dua</span>
-        </button>
+      <div className="site-max px-6 md:px-12 flex items-center justify-between">
+        {/* Monogram logo initials */}
+        <Link
+          to="/"
+          className="flex items-center gap-2 font-bold tracking-tight text-lg transition-transform duration-300 active:scale-95 text-themeText"
+        >
+          <span className="w-6.5 h-6.5 rounded bg-brandAccent flex items-center justify-center text-zinc-900 text-[13px] font-bold">R</span>
+          <span>Rajat Dua</span>
+        </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          <NavItem id="home" label="Home" />
-          <NavItem id="about" label="About" />
-          <NavItem id="projects" label="Projects" />
-          <NavItem id="contact" label="Contact" />
-          
+        {/* Desktop Nav Items (Magnify Dock Hover Effect) */}
+        <div className="hidden md:flex items-center gap-8 group/nav">
+          {navLinks.map((link, idx) => {
+            const isFocusedOrHovered = hoveredIdx === idx;
+            const anyFocusedOrHovered = hoveredIdx !== null;
+            const isActive = location.pathname === link.path;
+
+            const scaleVal = isTouch 
+              ? 'scale(1)' 
+              : isFocusedOrHovered 
+              ? 'scale(1.18)' 
+              : anyFocusedOrHovered 
+              ? 'scale(0.92)' 
+              : 'scale(1)';
+
+            const opacityVal = isTouch 
+              ? '1' 
+              : isFocusedOrHovered 
+              ? '1' 
+              : anyFocusedOrHovered 
+              ? '0.45' 
+              : '1';
+
+            const commonProps = {
+              key: idx,
+              style: {
+                transform: scaleVal,
+                opacity: opacityVal,
+                transition: 'transform 180ms cubic-bezier(0.25, 1, 0.5, 1), opacity 180ms cubic-bezier(0.25, 1, 0.5, 1)'
+              },
+              onMouseEnter: () => !isTouch && setHoveredIdx(idx),
+              onMouseLeave: () => !isTouch && setHoveredIdx(null),
+              onFocus: () => !isTouch && setHoveredIdx(idx),
+              onBlur: () => !isTouch && setHoveredIdx(null),
+              className: `text-sm font-semibold focus:outline-none transition-colors duration-150 inline-block ${
+                isActive 
+                  ? 'text-brandAccent font-bold' 
+                  : 'text-themeTextMuted hover:text-themeText'
+              }`
+            };
+
+            if (link.isExternal) {
+              return (
+                <a 
+                  href={link.path} 
+                  onClick={handleContactClick} 
+                  {...commonProps}
+                >
+                  {link.label}
+                </a>
+              );
+            }
+
+            return (
+              <Link 
+                to={link.path} 
+                {...commonProps}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+
+          {/* Simple manual overrides switch button */}
           <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-retroText/10 transition-colors text-retroText"
-            aria-label="Toggle Dark Mode"
+            onClick={() => {
+              const nextMode = !isDarkPage;
+              setIsDark(nextMode);
+              localStorage.setItem('user-theme', nextMode ? 'dark' : 'light');
+            }}
+            className="p-2 rounded-full hover:bg-themeBorder/40 transition-colors text-themeTextMuted hover:text-themeText focus:outline-none focus:ring-1 focus:ring-brandAccent ml-2"
+            title="Toggle Light/Dark Theme"
+            aria-label="Toggle Light/Dark Theme"
           >
-            {theme === 'dark' ? <FaSun className="text-yellow-400" /> : <FaMoon />}
+            {isDarkPage ? <FaSun size={14} /> : <FaMoon size={14} />}
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
+        {/* Mobile Navigation Trigger */}
+        <div className="flex md:hidden items-center gap-3">
+          {/* Simple manual theme switcher on mobile */}
           <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-retroText/10 transition-colors text-retroText"
-            aria-label="Toggle Dark Mode"
+            onClick={() => {
+              const nextMode = !isDarkPage;
+              setIsDark(nextMode);
+              localStorage.setItem('user-theme', nextMode ? 'dark' : 'light');
+            }}
+            className="p-2 rounded-full text-themeTextMuted hover:text-themeText focus:outline-none"
+            aria-label="Toggle Theme"
           >
-            {theme === 'dark' ? <FaSun className="text-yellow-400" /> : <FaMoon />}
+            {isDarkPage ? <FaSun size={15} /> : <FaMoon size={15} />}
           </button>
           
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-2xl text-retroText p-1 border-2 border-transparent hover:border-retroText"
+            className="p-2 text-themeText transition-colors"
           >
-            {isOpen ? <HiX /> : <HiMenu />}
+            {isOpen ? <HiX size={22} /> : <HiMenu size={22} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-retroBg border-b-[3px] border-retroText overflow-hidden"
-          >
-            <div className="border-t-[3px] border-retroText">
-              <MobileNavItem id="home" label="Home" />
-              <MobileNavItem id="about" label="About" />
-              <MobileNavItem id="projects" label="Projects" />
-              <MobileNavItem id="contact" label="Contact" />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+      {/* Mobile Drawer */}
+      {isOpen && (
+        <div
+          className="md:hidden absolute top-[100%] left-0 right-0 border-b shadow-lg z-30 py-5 px-6 flex flex-col gap-4 bg-themeBg/95 border-themeBorder backdrop-blur-md"
+        >
+          {navLinks.map((link, idx) => (
+            link.isExternal ? (
+              <a
+                key={idx}
+                href={link.path}
+                onClick={handleContactClick}
+                className="text-base font-semibold py-2 text-themeText"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={idx}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className={`text-base font-semibold py-2 border-b border-themeBorder/40 ${
+                  location.pathname === link.path ? 'text-brandAccent' : 'text-themeText'
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          ))}
+        </div>
+      )}
+    </nav>
   );
 }

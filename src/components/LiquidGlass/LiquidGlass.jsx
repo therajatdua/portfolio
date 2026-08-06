@@ -1,8 +1,21 @@
 import React, { Suspense, useMemo, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import vertexShader from './shaders/liquidGlassVertex.glsl?raw';
-import fragmentShader from './shaders/liquidGlassFragment.glsl?raw';
+// Shader files have been removed
+const vertexShader = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const fragmentShader = `
+  varying vec2 vUv;
+  void main() {
+    gl_FragColor = vec4(vUv, 0.0, 1.0);
+  }
+`;
 import LiquidGlassFallback from './LiquidGlassFallback';
 
 const Blob = ({ intensity = 0.3, speed = 0.4, color = '#6666ff', glossiness = 60 }) => {

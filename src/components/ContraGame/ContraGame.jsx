@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Game } from './engine/Game';
 import { FaTimes } from 'react-icons/fa';
 
 const ContraGame = ({ onClose }) => {
@@ -7,17 +6,8 @@ const ContraGame = ({ onClose }) => {
   const gameRef = useRef(null);
 
   useEffect(() => {
-    if (canvasRef.current && !gameRef.current) {
-      const game = new Game(canvasRef.current);
-      game.init();
-      gameRef.current = game;
-    }
-
-    return () => {
-      if (gameRef.current) {
-        gameRef.current.stop();
-      }
-    };
+    // Game engine files have been removed
+    // This component is no longer functional
   }, []);
 
   return (

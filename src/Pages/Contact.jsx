@@ -156,29 +156,18 @@ export default function Contact() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-5xl mx-auto pt-10 px-6"
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="site-max mx-auto pt-10 px-4">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
         {/* Contact Info (left column) */}
         <div className="space-y-8">
-          <div className="inline-block bg-retroAccent text-white px-3 py-1 font-press text-xs mb-4">
-            <span>📧</span> Let's Connect
-          </div>
+          <div className="inline-block pill mb-4">📧 Let's Connect</div>
 
-          <h2 className="text-3xl md:text-4xl font-press text-retroText leading-tight">
-            Ready to bring your <span className="text-retroAccent">ideas to life?</span>
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight">Ready to bring your <span className="accent">ideas to life?</span></h2>
 
-          <p className="text-lg font-sans text-retroText leading-relaxed">
-            Whether you have a project in mind, or just want to chat about tech and creativity, I'd love to hear from you.
-          </p>
+          <p className="text-lg text-muted leading-relaxed">Whether you have a project in mind or want to chat about tech, I'd love to hear from you.</p>
 
           <div className="space-y-4">
-            <div className="liquid-glass p-4 flex items-center gap-4">
+            <div className="glass-soft p-4 flex items-center gap-4 rounded-md">
               <div className="text-retroAccent">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -191,7 +180,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="liquid-glass p-4 flex items-center gap-4">
+            <div className="glass-soft p-4 flex items-center gap-4 rounded-md">
               <div className="text-retroAccent">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
@@ -205,19 +194,11 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="pt-6 border-t-4 border-retroAccent">
-            <h4 className="font-press text-xs text-retroText mb-4 uppercase">Follow my journey</h4>
+          <div className="pt-6 border-t mt-4">
+            <h4 className="text-xs mb-4 uppercase">Follow my journey</h4>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pixel-button p-3 flex items-center justify-center hover:bg-retroSecondary/20"
-                  title={`Follow me on ${social.name}`}
-                >
-                  {/* It’s fine to render text icon placeholders or your svg icons */}
+                <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="glass-soft p-3 rounded-md" title={`Follow me on ${social.name}`}>
                   <span style={{color: social.color}}>{social.icon}</span>
                 </a>
               ))}
@@ -226,34 +207,34 @@ export default function Contact() {
         </div>
 
         {/* Contact Form (right column) */}
-        <div className="liquid-glass p-8 relative">
+        <div className="glass-soft p-8 relative rounded-md">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <h3 className="font-press text-xl text-retroText mb-6 border-b-4 border-retroAccent pb-2">Send me a message</h3>
+            <h3 className="text-xl font-semibold mb-6 border-b pb-2">Send me a message</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block font-press text-xs text-retroText mb-2 uppercase" htmlFor="firstName">First Name *</label>
+                <label className="block text-xs mb-2 uppercase" htmlFor="firstName">First Name *</label>
                 <input
                   type="text"
                   id="firstName"
                   name="firstName"
                   value={contactForm.firstName}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border-2 ${errors.firstName ? 'border-red-500' : 'border-retroText'} bg-retroBg dark:bg-retroSecondary/30 text-retroText font-sans focus:outline-none focus:border-retroAccent transition-colors`}
+                  className={`w-full px-4 py-3 border rounded-md ${errors.firstName ? 'border-red-500' : 'border-gray-200'} bg-white dark:bg-gray-900 text-muted focus:outline-none focus:border-indigo-400 transition-colors`}
                   placeholder="First name"
                 />
                 {errors.firstName && <span className="text-red-500 text-xs font-sans mt-1 block">{errors.firstName}</span>}
               </div>
 
               <div>
-                <label className="block font-press text-xs text-retroText mb-2 uppercase" htmlFor="lastName">Last Name *</label>
+                <label className="block text-xs mb-2 uppercase" htmlFor="lastName">Last Name *</label>
                 <input
                   type="text"
                   id="lastName"
                   name="lastName"
                   value={contactForm.lastName}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border-2 ${errors.lastName ? 'border-red-500' : 'border-retroText'} bg-retroBg dark:bg-retroSecondary/30 text-retroText font-sans focus:outline-none focus:border-retroAccent transition-colors`}
+                  className={`w-full px-4 py-3 border rounded-md ${errors.lastName ? 'border-red-500' : 'border-gray-200'} bg-white dark:bg-gray-900 text-muted focus:outline-none focus:border-indigo-400 transition-colors`}
                   placeholder="Last name"
                 />
                 {errors.lastName && <span className="text-red-500 text-xs font-sans mt-1 block">{errors.lastName}</span>}
@@ -262,28 +243,28 @@ export default function Contact() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block font-press text-xs text-retroText mb-2 uppercase" htmlFor="email">Email Address *</label>
+                <label className="block text-xs mb-2 uppercase" htmlFor="email">Email Address *</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={contactForm.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border-2 ${errors.email ? 'border-red-500' : 'border-retroText'} bg-retroBg dark:bg-retroSecondary/30 text-retroText font-sans focus:outline-none focus:border-retroAccent transition-colors`}
+                  className={`w-full px-4 py-3 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-200'} bg-white dark:bg-gray-900 text-muted focus:outline-none focus:border-indigo-400 transition-colors`}
                   placeholder="email@example.com"
                 />
                 {errors.email && <span className="text-red-500 text-xs font-sans mt-1 block">{errors.email}</span>}
               </div>
 
               <div>
-                <label className="block font-press text-xs text-retroText mb-2 uppercase" htmlFor="phoneNumber">Phone Number</label>
+                <label className="block text-xs mb-2 uppercase" htmlFor="phoneNumber">Phone Number</label>
                 <input
                   type="tel"
                   id="phoneNumber"
                   name="phoneNumber"
                   value={contactForm.phoneNumber}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-retroText bg-retroBg dark:bg-retroSecondary/30 text-retroText font-sans focus:outline-none focus:border-retroAccent transition-colors"
+                  className="w-full px-4 py-3 border rounded-md border-gray-200 bg-white dark:bg-gray-900 text-muted focus:outline-none focus:border-indigo-400 transition-colors"
                   placeholder="+91..."
                 />
               </div>
@@ -296,7 +277,7 @@ export default function Contact() {
                 name="topic"
                 value={contactForm.topic}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border-2 border-retroText bg-retroBg dark:bg-retroSecondary/30 text-retroText font-sans focus:outline-none focus:border-retroAccent transition-colors appearance-none"
+                className="w-full px-4 py-3 border rounded-md border-gray-200 bg-white dark:bg-gray-900 text-muted focus:outline-none focus:border-indigo-400 transition-colors appearance-none"
               >
                 <option value="">Select a topic</option>
                 <option value="web-development">Web Development Project</option>
@@ -308,30 +289,20 @@ export default function Contact() {
 
             <div>
               <label className="block font-press text-xs text-retroText mb-2 uppercase" htmlFor="message">Message *</label>
-              <textarea
+                <textarea
                 id="message"
                 name="message"
                 value={contactForm.message}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border-2 ${errors.message ? 'border-red-500' : 'border-retroText'} bg-retroBg dark:bg-retroSecondary/30 text-retroText font-sans focus:outline-none focus:border-retroAccent transition-colors resize-none`}
+                  className={`w-full px-4 py-3 border rounded-md ${errors.message ? 'border-red-500' : 'border-gray-200'} bg-white dark:bg-gray-900 text-muted focus:outline-none focus:border-indigo-400 transition-colors resize-none`}
                 placeholder="Tell me about your project..."
                 rows="5"
               />
               {errors.message && <span className="text-red-500 text-xs font-sans mt-1 block">{errors.message}</span>}
             </div>
 
-            <button
-              type="submit"
-              className="w-full pixel-button bg-retroCta text-white hover:bg-retroCta/90 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              disabled={isSubmitting}
-            >
+            <button type="submit" className="w-full pill disabled:opacity-70 disabled:cursor-not-allowed" disabled={isSubmitting}>
               {isSubmitting ? 'Sending...' : 'Send Message'}
-              {!isSubmitting && (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="22" y1="2" x2="11" y2="13"/>
-                  <polygon points="22,2 15,22 11,13 2,9 22,2"/>
-                </svg>
-              )}
             </button>
 
             <AnimatePresence>
